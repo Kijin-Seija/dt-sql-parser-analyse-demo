@@ -129,6 +129,8 @@ const myPlugin = new DtSqlParserPostgresqlPlugin({
 
 增强解析的实现逻辑是: **从一个语句/实体节点开始，找到所有匹配规则链的实体，将实体信息放入父语句/实体的`relatedEntities`对象下以规则链名称为key的实体列表里。**
 
+匹配规则链的逻辑为：当实体节点所在的节点ruleIndex路径上存在此规则链中的所有ruleIndex，且顺序一致。则认为其匹配这个规则链。
+
 例如，定义以下语句，实体和规则链：
 ```typescript
 /**
@@ -239,5 +241,21 @@ const myPlugin = new DtSqlParserPostgresqlPlugin({
 ```
 
 > 语句和实体在这里被设置成了必须注册才能使用。虽然说理论上可以以任何一个ruleIndex作为语句和实体，但是我认为如果不加以显式声明，会导致结果变得混乱，出现各种循环引用，失去了结果的简洁性，也不好维护了。
+
+## 可以解决的问题
+
+- sql结合光标的问题
+
+- 收集sql 上下文中出现的表名，字段名，函数名等
+
+- 在语句报错时仍然正确解析
+  > 可以通过自定义预处理器完成
+
+- 别名问题
+  > 将alias作为一个实体的子实体收集即可，默认规则里添加了column的alias规则
+
+- 无法区分不同的含义但是相同类型的实体，比如select的字段和where子句中出现的字段
+  > 定义两个不同的规则链即可，比如select_target_column和select_where_column
+
 
 ## End
