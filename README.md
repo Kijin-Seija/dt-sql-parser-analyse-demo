@@ -4,6 +4,8 @@
 
 作为demo，难免会有很多不完善的地方，请多包涵。
 
+需要尝试的目前可以移步[这里](https://github.com/Kijin-Seija/dt-sql-parser-semantic-analyse-plugin)，目前也是一个测试版本。迭代更新比较快，生产环境慎用。
+
 > 启动环境： 建议node20以上，低版本不确定。
 
 ```
